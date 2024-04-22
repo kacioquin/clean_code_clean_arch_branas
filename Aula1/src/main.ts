@@ -1,48 +1,46 @@
-// @ts-nocheck
-// calculate ride
-export function calc(movArray) {
-  let result = 0;
-  for (const mov of movArray) {
-    if (mov.dist != null && mov.dist != undefined && typeof mov.dist === "number" && mov.dist > 0) {
-      if (mov.ds != null && mov.ds != undefined && mov.ds instanceof Date && mov.ds.toString() !== "Invalid Date") {
+const MIN_FARE = 10;
+const NORMAL_FARE = 2.1;
+const SUNDAY_FARE = 2.9;
+const OVERNIGTH_FARE = 3.9;
+const OVERNIGTH_SUNDAY = 5;
 
-        // overnight
+function isOvernigth(date: Date) {
+  return date.getHours() >= 22 || date.getHours() <= 6
+}
 
-        if (mov.ds.getHours() >= 22 || mov.ds.getHours() <= 6) {
+function isSunday(date: Date) {
+  return date.getDay() === 0
+}
 
-          // not sunday
-          if (mov.ds.getDay() !== 0) {
+function isValidDistance(distance: number) {
+  return distance != null && distance != undefined && typeof distance === "number" && distance > 0
+}
 
-            result += mov.dist * 3.90;
-            // sunday
-          } else {
-            result += mov.dist * 5;
+function isValidDate(date: Date) {
+  return date != null && date != undefined && date instanceof Date && date.toString() !== "Invalid Date"
+}
 
-          }
-        } else {
-          // sunday
-          if (mov.ds.getDay() === 0) {
-
-            result += mov.dist * 2.9;
-
-          } else {
-            result += mov.dist * 2.10;
-          }
-        }
-      } else {
-        // console.log(d);
-        return -2;
-      }
-    } else {
-      // console.log(dist);
-
-      return -1;
+export function calculateRide(segments: { distance: number, date: Date }[]) {
+  let fare = 0;
+  for (const segment of segments) {
+    if (!isValidDistance(segment.distance)) throw new Error("Invalid distance")
+    if (!isValidDate(segment.date)) throw new Error("Invalid date")
+    if (isOvernigth(segment.date) && !isSunday(segment.date)) {
+      fare += segment.distance * OVERNIGTH_FARE;
     }
 
+    if (isOvernigth(segment.date) && isSunday(segment.date)) {
+      fare += segment.distance * OVERNIGTH_SUNDAY;
+    }
+
+    if (!isOvernigth(segment.date) && isSunday(segment.date)) {
+      fare += segment.distance * SUNDAY_FARE;
+    }
+
+    if (!isOvernigth(segment.date) && !isSunday(segment.date)) {
+      fare += segment.distance * NORMAL_FARE;
+    }
   }
-  if (result < 10) {
-    return 10;
-  } else {
-    return result;
-  }
+
+  return (fare < MIN_FARE) ? MIN_FARE : fare
 }

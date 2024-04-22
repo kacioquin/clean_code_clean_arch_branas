@@ -1,0 +1,41 @@
+Code Smells
+  Olhar para o código e se dar conta do que está ruim....
+
+1 - nomes
+  nomes ruins:
+    calc
+    mov
+    dist
+    result
+    ds
+
+    * renomear variável
+    * renomear função
+    * renomear método
+
+linhas em branco
+  ** apagar dentro de função/método
+  perturba a visualização
+
+código morto
+  * apagar código comentado
+
+comentários
+  * criando variáveis explicativas
+  * extraindo métodos explicativos
+
+if/else
+  ** está complexo, aninhado
+
+  * consolidar comandos condicionais
+  * introdução de cláusulas guarda(inverter if)
+  * introduzir ternário
+
+magic number
+  * introduzir constantes ou variáveis explicativas
+
+tratamento de erro inadequado
+  * utilizar tratamento de erros adequado
+
+magic number
+tratamento de exceção inadequado(retorno -1 e -2 - o que isso significa?)
