@@ -1,4 +1,4 @@
-import { calculateRide } from "../src/main"
+import { calculateRide } from "../../src/1/main"
 
 test("Deve calcular a tarifa de uma corrida em um dia normal", function () {
   const input = [{

@@ -39,3 +39,10 @@ tratamento de erro inadequado
 
 magic number
 tratamento de exceção inadequado(retorno -1 e -2 - o que isso significa?)
+
+longa lista de parâmetros
+  * introduzindo objetos
+  * introduzindo objetos parâmetro
+
+classes grandes
+  * mover métodos(usar conceitos de design)
